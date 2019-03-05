@@ -1,23 +1,24 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reducers'
 import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
 import DeckDetails from './components/DeckDetails'
 import {Ionicons} from '@expo/vector-icons';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
+const store = createStore(reducer)
+
 const HomeStack = createStackNavigator({
-  Home: {
-    screen: DeckList,
-  },
-  Details: {
-    screen: DeckDetails,
-  }
+  Home: DeckList,
+  Details: DeckDetails
 })
 
 const TabNavigator = createBottomTabNavigator(
   {
-    'Decks': DeckList,
+    'Decks': HomeStack,
     'New Deck': AddDeck,
   },
   {
@@ -40,4 +41,15 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-export default createAppContainer(TabNavigator);
+const AppContainer = createAppContainer(TabNavigator);
+
+export default class App extends React.Component {
+
+  render() {
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    )
+  }
+}

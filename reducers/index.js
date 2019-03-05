@@ -14,3 +14,5 @@ function deck (state={}, action) {
       }
   }
 }
+
+export default deck
