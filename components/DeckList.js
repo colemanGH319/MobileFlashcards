@@ -7,6 +7,10 @@ export default class DeckList extends Component {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Deck List</Text>
+        <Button
+          title='Details'
+          onPress={() => this.props.navigation.navigate('Details')}
+        />
       </View>
     )
   }
