@@ -1,21 +1,43 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import DeckList from './components/DeckList'
+import AddDeck from './components/AddDeck'
+import DeckDetails from './components/DeckDetails'
+import {Ionicons} from '@expo/vector-icons';
+import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const HomeStack = createStackNavigator({
+  Home: {
+    screen: DeckList,
   },
-});
+  Details: {
+    screen: DeckDetails,
+  }
+})
+
+const TabNavigator = createBottomTabNavigator(
+  {
+    'Decks': DeckList,
+    'New Deck': AddDeck,
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === 'Decks') {
+          iconName = 'ios-filing'
+        } else if (routeName === 'New Deck') {
+          iconName = 'ios-add-circle-outline'
+        }
+        return <Ionicons name={iconName} size={30} color={tintColor} />;
+      }
+    }),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray'
+    }
+  }
+);
+
+export default createAppContainer(TabNavigator);
