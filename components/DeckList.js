@@ -1,51 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { createNewDeck, initializeDecks } from '../actions'
-import { StyleSheet, Button, View, Text, FlatList } from 'react-native'
+import { StyleSheet, Button, View,
+  Text, FlatList, TouchableOpacity } from 'react-native'
 
 class DeckList extends Component {
 
-  state = {
-    decks: [
-      {
-        id: 1,
-        questions: ['a', 'b'],
-      },
-      {
-        id: 2,
-        questions: ['c', 'd'],
-      }
-    ],
-    questions: {
-      'a': {},
-      'b': {},
-      'c': {},
-      'd': {}
-    }
-  }
+  _keyExtractor = (item, index) => item.name
 
-  componentDidMount() {
-    this.props.dispatch(initializeDecks('Deck 1'))
-  }
+  _renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => this.props.navigation.navigate('Details')}>
+      <View>
+        <Text style={styles.title}>{item.name}</Text>
+      </View>
+    </TouchableOpacity>
+  )
 
   render() {
+    const decks = Object.values(this.props.decks)
+    const newArray = decks.map((deck) => {key: deck})
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <FlatList
-          data={[{key: 'Deck 1'}, {key: 'Deck 2'}, {key: 'Deck 3'}]}
-          renderItem={({item}) => <Text style={styles.title}>{item.key}</Text>}
-        />
-        <Button
-          title='Details'
-          onPress={() => this.props.navigation.navigate('Details')}
+          data={decks}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
         />
         <Button
           title='Show Props'
-          onPress={() => console.log(this.props)}
-        />
-        <Button
-          title='Callback'
-          onPress={() => this.props.dispatch(createNewDeck('Deck 4'))}
+          onPress={() => console.log(newArray)}
         />
       </View>
     )
@@ -54,7 +36,7 @@ class DeckList extends Component {
 
 var styles = StyleSheet.create({
   title: {
-    color: 'green',
+    color: 'blue',
     fontWeight: 'bold',
     fontSize: 40,
   }
@@ -62,7 +44,7 @@ var styles = StyleSheet.create({
 
 function mapStateToProps({ decks }) {
   return {
-    decks: decks,
+    decks
   }
 }
 
