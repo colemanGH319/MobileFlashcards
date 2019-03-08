@@ -1,17 +1,51 @@
 import React, { Component } from 'react'
-import { Button, View, Text } from 'react-native'
+import { connect } from 'react-redux'
+import { StyleSheet, Button, View,
+  Text, FlatList, TouchableOpacity } from 'react-native'
 
-export default class DeckList extends Component {
+class DeckList extends Component {
 
-  render () {
+  _keyExtractor = (item, index) => item.name
+
+  _renderItem = ({ item }) => (
+    <TouchableOpacity onPress={() => this.props.navigation.navigate('Details')}>
+      <View>
+        <Text style={styles.title}>{item.name}</Text>
+      </View>
+    </TouchableOpacity>
+  )
+
+  componentDidMount() {
+    console.log("Mounting DeckList")
+  }
+
+  render() {
+    const decks = Object.values(this.props.decks)
+    const newArray = decks.map((deck) => {key: deck})
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Deck List</Text>
-        <Button
-          title='Details'
-          onPress={() => this.props.navigation.navigate('Details')}
+        <FlatList
+          data={decks}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
         />
       </View>
     )
   }
 }
+
+var styles = StyleSheet.create({
+  title: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 40,
+  }
+})
+
+function mapStateToProps({ decks }) {
+  return {
+    decks
+  }
+}
+
+export default connect(mapStateToProps)(DeckList)

@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import DeckForm from './DeckForm'
+import { Button, View, Text } from 'react-native'
 
-export default class AddDeck extends React.Component {
+class AddDeck extends React.Component {
+
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Add New Deck!</Text>
+        <Text>Enter deck name</Text>
+
+        <DeckForm navigation={this.props.navigation}/>
+
       </View>
     );
   }
 }
+
+export default AddDeck
