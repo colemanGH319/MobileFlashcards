@@ -15,6 +15,10 @@ class DeckList extends Component {
     </TouchableOpacity>
   )
 
+  componentDidMount() {
+    console.log("Mounting DeckList")
+  }
+
   render() {
     const decks = Object.values(this.props.decks)
     const newArray = decks.map((deck) => {key: deck})
@@ -24,10 +28,6 @@ class DeckList extends Component {
           data={decks}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
-        />
-        <Button
-          title='Show Props'
-          onPress={() => console.log(newArray)}
         />
       </View>
     )

@@ -1,31 +1,19 @@
 import React, { Component } from 'react'
-import { reduxForm } from 'redux-form'
-import { connect } from 'react-redux'
-import { createNewDeck } from '../actions'
+import DeckForm from './DeckForm'
 import { Button, View, Text } from 'react-native'
 
 class AddDeck extends React.Component {
 
-  state = {
-    value: ''
-  }
-
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Add New Deck!</Text>
+        <Text>Enter deck name</Text>
 
-        <Form id="newDeck">
-          <Input type="text" value={this.state.value} placeholder="Deck Name"/>
-        </Form>
+        <DeckForm navigation={this.props.navigation}/>
 
-        <Button
-          title='Add Deck'
-          onPress={() => this.props.dispatch(createNewDeck('Deck 1'))}
-        />
       </View>
     );
   }
 }
 
-export default connect()(AddDeck)
+export default AddDeck
