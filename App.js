@@ -12,8 +12,15 @@ import { createBottomTabNavigator, createStackNavigator, createAppContainer } fr
 store = createStore(reducer)
 
 const HomeStack = createStackNavigator({
-  Home: DeckList,
-  Details: DeckDetails
+  Home: {
+    screen: DeckList
+  },
+  Details: {
+    screen: DeckDetails
+  },
+  AddDeck: {
+    screen: AddDeck
+  }
 })
 
 const TabNavigator = createBottomTabNavigator(
@@ -44,7 +51,7 @@ const TabNavigator = createBottomTabNavigator(
 const AppContainer = createAppContainer(TabNavigator);
 
 export default class App extends React.Component {
-  
+
   render() {
     return (
       <Provider store={store}>
