@@ -12,9 +12,10 @@ export function createNewDeck (name) {
   }
 }
 
-export function createQuestion (question) {
+export function createQuestion (id, question) {
   return {
     type: ADD_QUESTION,
+    id,
     question
   }
 }
