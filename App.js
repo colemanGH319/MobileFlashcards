@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Platform } from 'react-native';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
@@ -9,7 +9,12 @@ import AddCard from './components/AddCard'
 import DeckDetails from './components/DeckDetails'
 import Quiz from './components/Quiz'
 import {Ionicons} from '@expo/vector-icons';
-import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import {
+  createBottomTabNavigator,
+  createStackNavigator,
+  createAppContainer,
+  createMaterialTopTabNavigator
+ } from 'react-navigation';
 
 store = createStore(reducer)
 
@@ -31,8 +36,7 @@ const HomeStack = createStackNavigator({
   }
 })
 
-const TabNavigator = createBottomTabNavigator(
-  {
+const tabParams = [{
     'Decks': HomeStack,
     'New Deck': AddDeck,
   },
@@ -53,8 +57,11 @@ const TabNavigator = createBottomTabNavigator(
       activeTintColor: 'tomato',
       inactiveTintColor: 'gray'
     }
-  }
-);
+}]
+
+const TabNavigator = Platform.OS === 'ios'
+                      ? createBottomTabNavigator(...tabParams)
+                      : createMaterialTopTabNavigator(...tabParams);
 
 
 const AppContainer = createAppContainer(TabNavigator);
@@ -62,10 +69,10 @@ const AppContainer = createAppContainer(TabNavigator);
 export default class App extends React.Component {
 
   render() {
-    return (
-      <Provider store={store}>
-        <AppContainer/>
-      </Provider>
-    )
+      return(
+        <Provider store={store}>
+          <AppContainer/>
+        </Provider>
+      )
   }
 }
