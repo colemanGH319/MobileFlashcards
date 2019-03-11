@@ -1,3 +1,4 @@
+
 import { combineReducers } from 'redux'
 import {
         ADD_DECK,
@@ -16,6 +17,7 @@ function decks (state={}, action) {
       return {
           ...state,
           [id] : {
+            deckId: id,
             name: action.name,
             questions: []
           }
@@ -23,7 +25,10 @@ function decks (state={}, action) {
     case ADD_QUESTION :
       return {
         ...state,
-        ...action.question
+        [action.id] : {
+          ...state[action.id],
+          questions: [...state[action.id].questions, action.question]
+        }
       }
 
     case INITIALIZE_DECKS :
@@ -37,20 +42,14 @@ function score (state={}, action) {
   switch(action.type) {
     case CORRECT_ANSWER :
       return {
-        ...state,
-        score: {
-          correct: state.score.correct + 1,
-          tries: state.score.tries + 1
-        }
+          correct: state.correct + 1,
+          tries: state.tries + 1
       }
 
     case WRONG_ANSWER :
       return {
         ...state,
-        score: {
-          ...state.score,
-          tries: state.score.tries + 1
-        }
+        tries: state.tries + 1
       }
     case INITIALIZE_SCORE :
       return {
