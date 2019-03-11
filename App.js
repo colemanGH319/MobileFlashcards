@@ -5,7 +5,9 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
+import AddCard from './components/AddCard'
 import DeckDetails from './components/DeckDetails'
+import Quiz from './components/Quiz'
 import {Ionicons} from '@expo/vector-icons';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
 
@@ -17,6 +19,12 @@ const HomeStack = createStackNavigator({
   },
   Details: {
     screen: DeckDetails
+  },
+  Quiz: {
+    screen: Quiz
+  },
+  AddCard: {
+    screen: AddCard
   },
   AddDeck: {
     screen: AddDeck
@@ -47,6 +55,7 @@ const TabNavigator = createBottomTabNavigator(
     }
   }
 );
+
 
 const AppContainer = createAppContainer(TabNavigator);
 
