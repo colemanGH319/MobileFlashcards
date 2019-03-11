@@ -10,11 +10,11 @@ class DeckList extends Component {
   _renderItem = ({ item }) => (
     <TouchableOpacity
     onPress={() => this.props.navigation.navigate('Details',{
-      deck: item
+      deckId: item.deckId
     })}>
       <View>
         <Text style={styles.title}>{item.name}</Text>
-        <Text>{`Cards: ${item.questions.length}`}</Text>
+        <Text>{`${item.questions.length} cards`}</Text>
       </View>
     </TouchableOpacity>
   )
@@ -28,10 +28,6 @@ class DeckList extends Component {
           data={decks}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
-        />
-        <Button
-          title='Log Decks'
-          onPress={() => console.log(this.props.decks)}
         />
       </View>
     )
