@@ -18,9 +18,9 @@ const validate = ({ deckName }) => {
 const DeckForm = ({...props}) => (
 
   <Formik
-    onSubmit={({ deckName }) => {
-      console.log(`Deck Name: ${deckName}`)
-      props.dispatch(createNewDeck(deckName))
+    onSubmit={(values, actions) => {
+      props.dispatch(createNewDeck(values.deckName))
+      actions.resetForm({})
       props.navigation.navigate('Home')
     }}
     validate={validate}
