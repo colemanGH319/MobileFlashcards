@@ -7,7 +7,6 @@ import { createQuestion } from '../actions'
 class DeckDetails extends React.Component {
 
   state = {
-    questions: this.props.questions,
     lastId: 0
   }
 
@@ -15,25 +14,20 @@ class DeckDetails extends React.Component {
     this.props.dispatch(createQuestion(id, question))
   }
 
-  unsubscribe = store.subscribe(() => {
-    this.state.questions = store.getState().decks[this.props.deck.deckId].questions
-    this.forceUpdate()
-  })
-
-  componentWillUnmount(){
-    this.unsubscribe()
+  componentDidMount(){
+    console.log(this.props)
   }
 
   render() {
-    const { deck, questions } = this.props
+    const { deckId, name, questions } = this.props
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>{`Title: ${deck.name}`}</Text>
-        <Text>{`Cards: ${this.state.questions.length}`}</Text>
+        <Text>{`Title: ${name}`}</Text>
+        <Text>{`Cards: ${questions.length}`}</Text>
         <Button
           title="Add Question"
           onPress={() => this.props.navigation.navigate('AddCard', {
-            id: deck.deckId,
+            id: deckId,
             lastId: this.state.lastId,
             incrementId: () => {
               this.setState((prevState) => ({ lastId: prevState.lastId + 1 }))}
@@ -42,8 +36,12 @@ class DeckDetails extends React.Component {
         <Button
           title="Start Quiz"
           onPress={() => this.props.navigation.navigate('Quiz', {
-            questions: this.state.questions
+            questions: questions
           })}
+        />
+        <Button
+          title="Log Props"
+          onPress={() => console.log(this.props)}
         />
       </View>
     );
@@ -52,10 +50,11 @@ class DeckDetails extends React.Component {
 
 function mapStateToProps(state, { navigation }) {
 
-  const { deck } = navigation.state.params
-  const { questions } = deck
+  const { deckId } = navigation.state.params.deck
+  const { name, questions } = state.decks[deckId]
   return {
-    deck,
+    deckId,
+    name,
     questions
   }
 }
