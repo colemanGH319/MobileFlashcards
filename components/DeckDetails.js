@@ -23,7 +23,7 @@ class DeckDetails extends React.Component {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>{`Title: ${name}`}</Text>
-        <Text>{`Cards: ${questions.length}`}</Text>
+        <Text>{`${questions.length} cards`}</Text>
         <Button
           title="Add Question"
           onPress={() => this.props.navigation.navigate('AddCard', {
@@ -50,7 +50,7 @@ class DeckDetails extends React.Component {
 
 function mapStateToProps(state, { navigation }) {
 
-  const { deckId } = navigation.state.params.deck
+  const { deckId } = navigation.state.params
   const { name, questions } = state.decks[deckId]
   return {
     deckId,

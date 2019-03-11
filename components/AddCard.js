@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
-import { Formik } from 'formik'
+import { Formik, Field, Form } from 'formik'
 import { Button, View, Text, TextInput, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { createQuestion } from '../actions'
 
 class AddCard extends Component {
 
-  validate = ({ text }) => {
+  validate = ({ text, answer }) => {
     const errors = {}
     if (text === undefined) {
       errors.text = 'Required'
     } else if (text.trim() === '') {
       errors.text = 'Must not be blank'
+    } else if (answer === undefined) {
+      errors.answer = 'Required'
+    } else if (answer.trim() === '') {
+      errors.answer = 'Must not be blank'
     }
 
     return errors
