@@ -8,16 +8,16 @@ class DeckList extends Component {
   _keyExtractor = (item, index) => item.name
 
   _renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => this.props.navigation.navigate('Details')}>
+    <TouchableOpacity
+    onPress={() => this.props.navigation.navigate('Details',{
+      deck: item
+    })}>
       <View>
         <Text style={styles.title}>{item.name}</Text>
+        <Text>{`Cards: ${item.questions.length}`}</Text>
       </View>
     </TouchableOpacity>
   )
-
-  componentDidMount() {
-    console.log("Mounting DeckList")
-  }
 
   render() {
     const decks = Object.values(this.props.decks)
@@ -28,6 +28,10 @@ class DeckList extends Component {
           data={decks}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
+        />
+        <Button
+          title='Log Decks'
+          onPress={() => console.log(this.props.decks)}
         />
       </View>
     )
