@@ -38,6 +38,14 @@ class Quiz extends Component {
   render() {
     const { questions, score } = this.props
     const currentQuestion = questions[this.state.currentIndex]
+
+    if (questions.length === 0) {
+      return (
+        <View>
+          <Text>Your deck doesn't have any cards. Add cards to the deck before starting the quiz.</Text>
+        </View>
+      )
+    }
     return (
       <View>
         <Text>Quiz!</Text>
@@ -79,7 +87,10 @@ class Quiz extends Component {
                 showMarkButtons: true
               }))}
             />
-            : (null)
+            : <Button
+                title="Return to Deck"
+                onPress={() => this.props.navigation.goBack()}
+              />
         }
         <Button
           title="Restart Quiz"
