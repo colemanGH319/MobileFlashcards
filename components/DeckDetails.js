@@ -6,16 +6,8 @@ import { createQuestion } from '../actions'
 
 class DeckDetails extends React.Component {
 
-  state = {
-    lastId: 0
-  }
-
   handleNewQuestion = (id, question) => {
     this.props.dispatch(createQuestion(id, question))
-  }
-
-  componentDidMount(){
-    console.log(this.props)
   }
 
   render() {
@@ -28,9 +20,6 @@ class DeckDetails extends React.Component {
           title="Add Question"
           onPress={() => this.props.navigation.navigate('AddCard', {
             id: deckId,
-            lastId: this.state.lastId,
-            incrementId: () => {
-              this.setState((prevState) => ({ lastId: prevState.lastId + 1 }))}
           })}
         />
         <Button
@@ -38,10 +27,6 @@ class DeckDetails extends React.Component {
           onPress={() => this.props.navigation.navigate('Quiz', {
             questions: questions
           })}
-        />
-        <Button
-          title="Log Props"
-          onPress={() => console.log(this.props)}
         />
       </View>
     );
