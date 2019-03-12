@@ -6,20 +6,22 @@ import {
         INITIALIZE_DECKS,
         CORRECT_ANSWER,
         WRONG_ANSWER,
+        UPDATE_NEXT_ID,
         INITIALIZE_SCORE
       } from '../actions'
-import generateUID from '../utils/createId'
+
 
 function decks (state={}, action) {
   switch (action.type) {
     case ADD_DECK :
-      const id = generateUID()
+
       return {
           ...state,
-          [id] : {
-            deckId: id,
+          [action.id] : {
+            deckId: action.id,
             name: action.name,
-            questions: []
+            questions: [],
+            nextId: 0
           }
         }
     case ADD_QUESTION :
@@ -31,8 +33,14 @@ function decks (state={}, action) {
         }
       }
 
-    case INITIALIZE_DECKS :
-      return state
+    case UPDATE_NEXT_ID :
+      return {
+        ...state,
+        [action.id] : {
+          ...state[action.id],
+          nextId: state[action.id].nextId + 1
+        }
+      }
     default :
       return state
   }
