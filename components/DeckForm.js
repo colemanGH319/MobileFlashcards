@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createNewDeck } from '../actions'
 import { TextInput, Button, View, StyleSheet } from 'react-native'
+import generateUID from '../utils/createId'
 
 const validate = ({ deckName }) => {
   const errors = {}
@@ -19,9 +20,12 @@ const DeckForm = ({...props}) => (
 
   <Formik
     onSubmit={(values, actions) => {
-      props.dispatch(createNewDeck(values.deckName))
+      const id = generateUID()
+      props.dispatch(createNewDeck(id, values.deckName))
       actions.resetForm({})
-      props.navigation.navigate('Home')
+      props.navigation.navigate('Details',{
+        deckId: id
+      })
     }}
     validate={validate}
     render={({
@@ -37,7 +41,7 @@ const DeckForm = ({...props}) => (
           value={deckName}
         />
         <Button
-          title="Submit"
+          title="Create Deck"
           disabled={!isValid}
           onPress={handleSubmit}
         />
