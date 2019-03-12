@@ -4,10 +4,12 @@ export const INITIALIZE_DECKS = 'INITIALIZE_DECKS'
 export const INITIALIZE_SCORE = 'INITIALIZE_SCORE'
 export const CORRECT_ANSWER = 'CORRECT_ANSWER'
 export const WRONG_ANSWER = 'WRONG_ANSWER'
+export const UPDATE_NEXT_ID = 'UPDATE_NEXT_ID'
 
-export function createNewDeck (name) {
+export function createNewDeck (id, name) {
   return {
     type: ADD_DECK,
+    id,
     name
   }
 }
@@ -17,6 +19,13 @@ export function createQuestion (id, question) {
     type: ADD_QUESTION,
     id,
     question
+  }
+}
+
+export function updateNextId (id) {
+  return {
+    type: UPDATE_NEXT_ID,
+    id
   }
 }
 
