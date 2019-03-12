@@ -24,11 +24,13 @@ class DeckList extends Component {
     const newArray = decks.map((deck) => {key: deck})
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <FlatList
-          data={decks}
-          keyExtractor={this._keyExtractor}
-          renderItem={this._renderItem}
-        />
+        {decks.length === 0
+          ? <Text>No decks to display</Text>
+          : <FlatList
+              data={decks}
+              keyExtractor={this._keyExtractor}
+              renderItem={this._renderItem}
+            />}
       </View>
     )
   }
