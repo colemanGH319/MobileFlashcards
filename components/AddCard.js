@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Formik, Field, Form } from 'formik'
 import { Button, View, Text, TextInput, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { createQuestion } from '../actions'
+import { createQuestion, updateNextId } from '../actions'
 
 class AddCard extends Component {
 
@@ -22,14 +22,13 @@ class AddCard extends Component {
   }
 
   render () {
-    const { navigation } = this.props
+    const { navigation, nextId } = this.props
     const id = navigation.getParam('id', 'NO ID')
-    const { lastId } = navigation.state.params
     return(
       <Formik
         onSubmit={(values, actions) => {
-          this.props.dispatch(createQuestion(id, { ...values, qid: lastId }))
-          navigation.state.params.incrementId()
+          this.props.dispatch(createQuestion(id, { ...values, qid: nextId }))
+          this.props.dispatch(updateNextId(id))
           navigation.goBack()
         }}
         validate={this.validate}
@@ -39,7 +38,7 @@ class AddCard extends Component {
           values: { text, answer },
           isValid
         }) => (
-          <View>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <TextInput
               onChangeText={handleChange('text')}
               style={styles.rootInput}
@@ -57,10 +56,6 @@ class AddCard extends Component {
               disabled={!isValid}
               onPress={handleSubmit}
             />
-            <Button
-              title="show Id"
-              onPress={() => console.log('Next Id', lastId)}
-            />
           </View>
         )}
       />
@@ -77,5 +72,12 @@ const styles = StyleSheet.create({
   },
 });
 
+function mapStateToProps({ decks }, { navigation }) {
+  const { id } = navigation.state.params
+  const deck = decks[id]
+  return {
+    nextId: deck.nextId
+  }
+}
 
-export default connect()(AddCard)
+export default connect(mapStateToProps)(AddCard)
