@@ -41,13 +41,13 @@ class Quiz extends Component {
 
     if (questions.length === 0) {
       return (
-        <View>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text>Your deck doesn't have any cards. Add cards to the deck before starting the quiz.</Text>
         </View>
       )
     }
     return (
-      <View>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Quiz!</Text>
         <Text>{`Question: ${currentQuestion === undefined ? 'Complete' : currentQuestion.text}`}</Text>
         <Text>{this.state.showAnswer ? `Answer: ${currentQuestion.answer}` : ''}</Text>
@@ -55,8 +55,6 @@ class Quiz extends Component {
           ? <Text>{`Questions Remaining: ${this.state.remaining}`}</Text>
           : <Text>{`Final Score: ${score.correct}/${score.tries}`}</Text>
           }
-
-
         {currentQuestion !== undefined
           ? <Button
             title="Show Answer"
