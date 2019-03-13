@@ -5,6 +5,7 @@ export const INITIALIZE_SCORE = 'INITIALIZE_SCORE'
 export const CORRECT_ANSWER = 'CORRECT_ANSWER'
 export const WRONG_ANSWER = 'WRONG_ANSWER'
 export const UPDATE_NEXT_ID = 'UPDATE_NEXT_ID'
+export const UPDATE_STUDIED = 'UPDATE_STUDIED'
 
 export function createNewDeck (id, name) {
   return {
@@ -44,5 +45,11 @@ export function scoreAnswer (isCorrect) {
     return {
       type: WRONG_ANSWER
     }
+  }
+}
+
+export function updateStudiedStatus() {
+  return {
+    type: UPDATE_STUDIED
   }
 }

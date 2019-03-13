@@ -7,7 +7,8 @@ import {
         CORRECT_ANSWER,
         WRONG_ANSWER,
         UPDATE_NEXT_ID,
-        INITIALIZE_SCORE
+        INITIALIZE_SCORE,
+        UPDATE_STUDIED
       } from '../actions'
 
 
@@ -69,6 +70,15 @@ function score (state={}, action) {
   }
 }
 
+function hasStudied(state={}, action) {
+  switch (action.type) {
+    case UPDATE_STUDIED :
+      return true
+    default :
+      return state
+  }
+}
+
 export default combineReducers({
-  decks, score
+  decks, score, hasStudied
 })

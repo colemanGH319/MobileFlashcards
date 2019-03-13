@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createNewDeck } from '../actions'
 import { TextInput, Button, View, StyleSheet } from 'react-native'
-import generateUID from '../utils/createId'
+import { generateUID } from '../utils/helpers'
 
 const validate = ({ deckName }) => {
   const errors = {}
