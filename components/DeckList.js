@@ -6,7 +6,7 @@ import NOTIFICATION_KEY from '../utils/helpers'
 
 class DeckList extends Component {
 
-  _keyExtractor = (item, index) => item.name
+  _keyExtractor = (item, index) => `${item.name} - ${index}`
 
   _renderItem = ({ item }) => (
     <TouchableOpacity
