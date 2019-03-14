@@ -4,6 +4,8 @@
 
 Mobile Flashcards is an app that allows users to create decks of flashcards and quiz themselves.
 
+View the [Expo Snack](https://snack.expo.io/@colemanrnative/mobileflashcards)
+
 ## Technologies
 
 The application's UI was built with React Native. Other technologies include:

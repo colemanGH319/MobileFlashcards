@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
-import { shuffle, clearLocalNotification,
-  setLocalNotification } from '../utils/helpers'
-import { initializeScore, scoreAnswer, updateStudiedStatus } from '../actions'
+import { shuffle } from '../utils/helpers'
+import { initializeScore, scoreAnswer } from '../actions'
 
 class Quiz extends Component {
 
@@ -11,12 +10,11 @@ class Quiz extends Component {
     currentIndex: 0,
     showAnswer: false,
     showMarkButtons: true,
-    remaining: this.props.shuffledQuestions.length
+    remaining: this.props.questions.length
   }
 
   componentDidMount() {
     this.props.dispatch(initializeScore())
-    this.updateActivityStatus()
   }
 
   handleMarkButton = (isCorrect) => {
@@ -32,26 +30,16 @@ class Quiz extends Component {
       currentIndex: 0,
       showAnswer: false,
       showMarkButtons: true,
-      remaining: this.props.shuffledQuestions.length
+      remaining: this.props.questions.length
     })
     this.props.dispatch(initializeScore())
   }
 
-  updateActivityStatus () {
-    if (this.props.hasStudied === true) {
-      return
-    } else {
-      this.props.dispatch(updateStudiedStatus())
-      clearLocalNotification()
-        .then(setLocalNotification)
-    }
-  }
-
   render() {
-    const { shuffledQuestions, score } = this.props
-    const currentQuestion = shuffledQuestions[this.state.currentIndex]
+    const { questions, score } = this.props
+    const currentQuestion = questions[this.state.currentIndex]
 
-    if (shuffledQuestions.length === 0) {
+    if (questions.length === 0) {
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text>Your deck doesn't have any cards. Add cards to the deck before starting the quiz.</Text>
@@ -74,7 +62,6 @@ class Quiz extends Component {
             />
           : (null)
         }
-
         {this.state.showMarkButtons
           ? (
               <View>
@@ -88,7 +75,7 @@ class Quiz extends Component {
                 />
               </View>
           )
-          : this.state.currentIndex < shuffledQuestions.length - 1 ?
+          : this.state.currentIndex < questions.length - 1 ?
             <Button
               title="Next Question"
               onPress={() => this.setState((prevState) => ({
@@ -110,16 +97,12 @@ class Quiz extends Component {
     )
   }
 }
-
 function mapStateToProps(state, { navigation }){
   const { questions } = navigation.state.params
-  const shuffledQuestions = shuffle(questions)
-  const { score, hasStudied } = state
+  const score = state.score
   return {
-    shuffledQuestions,
-    score,
-    hasStudied
+    questions,
+    score
   }
 }
-
 export default connect(mapStateToProps)(Quiz)
