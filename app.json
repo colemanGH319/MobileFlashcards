@@ -24,6 +24,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "A basic flashcard app built with React Native and Redux.",
+    "githubUrl": "https://github.com/colemanGH319/MobileFlashcards"
   }
 }
