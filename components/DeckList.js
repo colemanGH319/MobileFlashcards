@@ -22,7 +22,7 @@ class DeckList extends Component {
 
   render() {
     const decks = Object.values(this.props.decks)
-    const newArray = decks.map((deck) => {key: deck})
+    // const newArray = decks.map((deck) => {key: deck})
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {decks.length === 0
